@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Moduł3 {% endblock %}
+
+{% block body %}
+
+
+<h1>{{ data.title }}</h1>
+
+<h2>Data i godzina: {{ data.date|date("Y-m-d H:i:s") }}</h2><br>
+
+
+<h3>Lista wiadomości:</h3>
+    <ul><br>
+        {% for message in data.messages %}
+            <li style="list-style: none;">{{ message.id }}: {{ message.text }} (autor: {{ message.author }})</li>
+        {% endfor %}
+    </ul>
+<br>
+
+<h3>Numery: {{ data.numbers|join(',') }}</h3><br>
+
+<h3>Pogoda: {{ data.weather.temperature }}<sup>o</sup>, {{ data.weather.condition }}</h3><br>
+
+<h3>
+Typ użytkownika:
+    {% if data.isPremiumUser %}
+        {{ 'Premium'|upper }}
+    {% else %}
+        {{ 'Standard'|upper }}
+    {% endif %}
+</h3><br>
+
+<h3>{{data.user.name}}({{data.user.email}})</h3><br>
+
+<h3>Ilość odświeżeń: {{ data.pageViews }}</h3><br>
+
+<h3>Popularne tagi: {{ data.popularTags|join(',') }}</h3><br>
+
+<h3>Ocena strony: {{ data.rating }}</h3><br>
+
+
+
+
+
+{% endblock %}
