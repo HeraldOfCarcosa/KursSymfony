@@ -22,3 +22,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\CodeGenerator:
+        arguments:
+                $codePrefix: 'code_'
+    
+
+    App\Service\GameGenerator:
+        arguments:
+            $gameList: ['Hollow Knight', 'Stellaris', 'Darktide', 'Sekiro', 'Dark Souls', 'Elden Ring', 'Barotrauma', 'Terraria', 'Kerbal Space Program', 'Cyberpunk 2077']

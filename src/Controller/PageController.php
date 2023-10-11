@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\GameGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
+    #[Route('/gameList', name: 'page.gameList')]
+    public function gameList(GameGenerator $gameGenerator): Response
+    {
+        $gameGenerator = $gameGenerator->gameGeneration();
+        
+        return $this->render('page/gameList.html.twig', [
+        'gameGenerator' => $gameGenerator
+        ]);
+    }
 
 
     #[Route('/home', name: 'page.page')]

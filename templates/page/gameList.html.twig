@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Moduł4 {% endblock %}
+
+{% block body %}
+
+<h1>Lista Gier</h1> 
+
+<ul>
+        {% for game in gameGenerator %}
+            <li>{{ game }}</li>
+        {% endfor %}
+</ul>
+
+{% endblock %}
+
+
