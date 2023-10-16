@@ -1,0 +1,20 @@
+.action-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00152b; 
+    color: #fff; 
+    text-decoration: none;
+    border: 2px solid #00152b; 
+    border-radius: 5px;
+    margin-left: 500px; 
+    justify-content: center;
+    align-items: center;
+}
+
+.action-link:hover {
+    background-color: #013975; 
+}
+
+.action-link + .action-link {
+    margin-left: 10px;
+}

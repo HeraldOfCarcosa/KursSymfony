@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ news.name }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ news.name }}</h1>
+    <p>{{ news.pDate | date('Y-m-d') }}</p>
+    <p>{{ news.content }}</p>
+    <h2>Comments</h2>
+    <br>
+    <ul>
+    {% for comment in comments %}
+        <li><h3>{{ comment.userName }}<h3><p>{{comment.content}}</p></li>
+    {% endfor %}
+    </ul>
+
+
+{% endblock %}
