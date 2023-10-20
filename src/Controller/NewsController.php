@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Entity\Comments;
+use App\Form\NewsFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ class NewsController extends AbstractController
         $allArticles = $entityManager->getRepository(News::class)->findAll();
         
         $articlesWithComments = [];
-         foreach ($allArticles as $article) {
+        foreach ($allArticles as $article) {
         $comments = $article->getComments();
         $articlesWithComments[] = [
             'article' => $article,
@@ -42,6 +43,67 @@ class NewsController extends AbstractController
         ]);
     }
     */
+
+    #[Route('/news/new', name: 'news_add')]
+    public function new(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $News = new News();
+        $form = $this->createForm(NewsFormType::class, $News);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $News = $form->getData();
+            $News->setPublicationTime(new \DateTime());
+            $entityManager->getRepository(NewsFormType::class)->save($News);
+
+            $this->addFlash(
+                'success',
+                'News article created!'
+            );
+
+            return $this->redirectToRoute('news_list', ['id' => $News->getId()]);
+        }
+
+        return $this->render('news/newNews.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/news/edit/{id}', name: 'news_edit')]
+    public function edit(News $News, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $form = $this->createForm(NewsFormType::class, $News);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $News = $form->getData();
+            $entityManager->getRepository(NewsFormType::class)->save($News);
+
+            $this->addFlash('success', 'News article updated!');
+
+            return $this->redirectToRoute('news_list', ['id' => $News->getId()]);
+        }
+
+        return $this->render('news/editNews.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #[Route('/newsAdd', name: 'add_news')]
     public function index(EntityManagerInterface $entityManager): Response
     {

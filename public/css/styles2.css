@@ -18,3 +18,54 @@
 .action-link + .action-link {
     margin-left: 10px;
 }
+.container {
+    margin: 20px;
+}
+
+.main-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.news-article {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.article-title {
+    font-size: 20px;
+    color: #007bff;
+}
+
+.article-date {
+    color: #666;
+}
+
+.article-content {
+    margin-top: 10px;
+}
+
+.comments-title {
+    font-size: 16px;
+    color: #333;
+}
+
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.comment {
+    margin: 10px 0;
+}
+
+.comment-user {
+    font-weight: bold;
+}
+
+.comment-content {
+    font-size: 14px;
+    color: #555;
+}

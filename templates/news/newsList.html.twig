@@ -1,62 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} NEWS LIST{% endblock %}
-        {% block stylesheets %}
-        <link rel="stylesheet" href="{{asset ('css/styles2.css')}}">
-        <link rel="stylesheet" href="{{asset ('css/styles.css')}}">
-        {% endblock %}
+{% block title %}NEWS LIST{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
 {% block body %}
-<h1> CHECK OUT THE NEW NEWS!!!!</h1>
-<div>
+    <h1>CHECK OUT THE NEW NEWS!!!!</h1>
+
+    {# Commented out the section with links for clarity #}
+    {#<div>
+        <ul>
+            <a class="action-link" href="{{ path('add_news') }}">Dodaj</a>
+            <a class="action-link" href="{{ path('index.home') }}">Edytuj</a>
+            <a class="action-link" href="{{ path('remove_news') }}">Usuń</a>
+        </ul>
+    </div>  #}
+
+    {% for articleWithComments in articlesWithComments %}
+        <h2>{{ articleWithComments.article.name }} - <a href="{{ path('news_edit', { 'id': articleWithComments.article.id }) }}">Edit</a></h2>
+        <p>{{ articleWithComments.article.pDate | date('Y-m-d') }}</p>
+        <p>{{ articleWithComments.article.content }}</p>
+
+        <h3>Comments</h3>
+        <br>
+        <ul>
+            {% for comment in articleWithComments.comments %}
+                <li>
+                    <p>{{ comment.userName }}</p>
+                    <h6>{{ comment.content }}</h6>
+                </li>
+                <br><br>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+    {# Commented out another section for clarity #}
+    {#
     <ul>
-        <a class="action-link" href="{{path('add_news')}}">Dodaj</a>
-        <a class="action-link" href="{{path('index.home')}}">Edytuj</a>
-        <a class="action-link" href="{{path('remove_news')}}">Usuń</a>
-    </ul>
-</div>
-
-{% for articleWithComments in articlesWithComments %}
-    <h2>{{ articleWithComments.article.name }}</h2>
-    <p>{{ articleWithComments.article.pDate | date('Y-m-d') }}</p>
-    <p>{{ articleWithComments.article.content }}</p>
-
-    <h3>Comments</h3>
-    <br>
-    <ul>
-        {% for comment in articleWithComments.comments %}
-            <li>
-                <p>{{ comment.userName }}</p>
-                <h6>{{ comment.content }}</h6>
-            </li>
-            <br><br>
-        {% endfor %}
-    </ul>
-{% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-{#
- <ul>
-        {% for article in allArticles %}
-            <li>
-               <a href="{{ path('news_article', { 'id': article.id }) }}">
-                   <h2> {{ article.name }}</h2>
-                </a>
-                <p>{{ article.content }}</p>
-                
-            </li>
-        {% else %}
-            <li>No articles found.</li>
-        {% endfor %}
-    </ul>
-#}
+           {% for article in allArticles %}
+               <li>
+                  <a href="{{ path('news_article', { 'id': article.id }) }}">
+                      <h2>{{ article.name }}</h2>
+                   </a>
+                   <p>{{ article.content }}</p>
+               </li>
+           {% else %}
+               <li>No articles found.</li>
+           {% endfor %}
+       </ul>
+    #}
 
 {% endblock %}
