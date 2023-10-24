@@ -20,7 +20,13 @@
     </div>  #}
 
     {% for articleWithComments in articlesWithComments %}
-        <h2>{{ articleWithComments.article.name }} - <a href="{{ path('news_edit', { 'id': articleWithComments.article.id }) }}">Edit</a></h2>
+        <h2>{{ articleWithComments.article.name }}
+            {%  if is_granted("ROLE_EDIT") %}
+                -
+                <a href="{{ path('news_edit', { 'id': articleWithComments.article.id }) }}">Edit</a></h2>
+            {% endif %}
+
+
         <p>{{ articleWithComments.article.pDate | date('Y-m-d') }}</p>
         <p>{{ articleWithComments.article.content }}</p>
 

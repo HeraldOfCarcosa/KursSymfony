@@ -47,6 +47,7 @@ class NewsController extends AbstractController
     #[Route('/news/new', name: 'news_add')]
     public function new(EntityManagerInterface $entityManager, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADD');
         $News = new News();
         $form = $this->createForm(NewsFormType::class, $News);
 
@@ -72,6 +73,7 @@ class NewsController extends AbstractController
     #[Route('/news/edit/{id}', name: 'news_edit')]
     public function edit(News $News, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDIT');
         $form = $this->createForm(NewsFormType::class, $News);
 
         $form->handleRequest($request);
