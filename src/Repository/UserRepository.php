@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
+
 /**
  * @extends ServiceEntityRepository<User>
 * @implements PasswordUpgraderInterface<User>
@@ -37,6 +38,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function findRandomUser(): ?User
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        // Count the total number of users
+        $totalUsers = $queryBuilder
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // Generate a random offset
+        $randomOffset = mt_rand(0, $totalUsers - 1);
+
+        // Find a random user using the offset
+        return $queryBuilder
+            ->select('u')
+            ->setMaxResults(1)
+            ->setFirstResult($randomOffset)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

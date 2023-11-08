@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Message\SendKey;
+use App\Message\SendSMS;
 use App\Service\CodeGenerator;
+use App\Service\RandomUserId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
@@ -32,6 +36,21 @@ class IndexController extends AbstractController
 
 
        return $this->render('index/code.html.twig', ['code' => $code]);
+    }
+    #[Route('/sendCode', name: 'index.sendcode')]
+    public function sendCode(MessageBusInterface $bus, RandomUserId $randomUserId): JsonResponse
+    {
+        $bus->dispatch(new SendKey($randomUserId->getRandomUserId()));
+
+        return new JsonResponse(['status' => 'Email sent']);
+    }
+
+    #[Route('/sendSMS', name: 'index.sendSMS')]
+    public function sendSms(MessageBusInterface $bus, RandomUserId $randomUserId): JsonResponse
+    {
+        $bus->dispatch(new SendSMS($randomUserId->getRandomUserId()));
+
+        return new JsonResponse(['status' => 'SMS sent']);
     }
 
     #[Route('/about', name: 'index.about')]

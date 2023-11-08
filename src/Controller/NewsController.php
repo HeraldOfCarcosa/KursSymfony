@@ -17,6 +17,7 @@ class NewsController extends AbstractController
     #[Route('/newsList', name: 'news_list')]
     public function newsList(EntityManagerInterface $entityManager) : Response 
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $allArticles = $entityManager->getRepository(News::class)->findAll();
         
         $articlesWithComments = [];

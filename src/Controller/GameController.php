@@ -19,7 +19,7 @@ class GameController extends AbstractController
     public function index(EntityManagerInterface $entityManager, HttpFoundationRequest $request): Response
     {
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+       // $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $game = new Game();
         /*$game->setName('TFT')
